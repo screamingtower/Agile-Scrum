@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agile Scrum Slides</title>
+  <style>
+:root{
+  --bg:#0b1320;
+  --bg-soft:#101a2b;
+  --panel:#122033;
+  --panel-2:#162842;
+  --text:#eef4ff;
+  --muted:#9fb3c8;
+  --line:rgba(255,255,255,.08);
+  --brand1:#33e0ff;
+  --brand2:#2b6fff;
+  --brand3:#59f1c8;
+  --brand4:#ffb84d;
+  --brand5:#ff6b8f;
+  --radius:22px;
+  --shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(51,224,255,.16), transparent 24%),
+    radial-gradient(circle at 82% 20%, rgba(255,107,143,.10), transparent 20%),
+    radial-gradient(circle at 80% 82%, rgba(43,111,255,.18), transparent 28%),
+    linear-gradient(135deg, #040b12 0%, var(--bg) 55%, #08111d 100%);
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:36px 36px;
+  opacity:.18;
+}
+
+.brand{
+  position:fixed;
+  top:16px;
+  left:18px;
+  z-index:30;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 13px;
+  border-radius:999px;
+  background:rgba(9,16,28,.72);
+  border:1px solid var(--line);
+  backdrop-filter:blur(10px);
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.brand-mark{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:conic-gradient(from 220deg, var(--brand1), var(--brand2), var(--brand5), var(--brand4), var(--brand3), var(--brand1));
+  box-shadow:0 0 18px rgba(51,224,255,.28);
+}
+
+.brand-word{
+  color:#dfeeff;
+  font-weight:700;
+}
+
+.deck,.slides{
+  width:100%;
+  height:100%;
+  position:relative;
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+  padding:72px 72px 92px;
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:28px;
+  opacity:0;
+  transform:translateX(26px);
+  pointer-events:none;
+  transition:opacity .32s ease, transform .32s ease;
+}
+
+.slide.active{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+}
+
+.slide.center{
+  grid-template-columns:minmax(0,1fr);
+}
+
+.panel{
+  min-width:0;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+}
+
+.hero,.content{
+  padding:32px 34px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+}
+
+.visual{
+  padding:22px;
+  min-width:0;
+  display:flex;
+}
+
+.cover{
+  width:100%;
+  height:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+  gap:24px;
+}
+
+.cover-right{
+  min-width:0;
+  display:grid;
+  gap:16px;
+  align-content:center;
+}
+
+.signal{
+  min-height:150px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(circle at 20% 25%, rgba(255,184,77,.16), transparent 30%),
+    radial-gradient(circle at 82% 74%, rgba(51,224,255,.14), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  overflow:hidden;
+}
+
+.signal svg{width:100%;height:100%;display:block}
+
+.eyebrow{
+  margin:0 0 12px;
+  font-size:13px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--brand1);
+  font-weight:700;
+}
+
+h1,h2,h3,p{margin:0}
+
+h1{
+  font-size:clamp(40px,5vw,68px);
+  line-height:1;
+  letter-spacing:-.04em;
+  margin:0 0 16px;
+}
+
+h2{
+  font-size:clamp(30px,3.4vw,46px);
+  line-height:1.04;
+  letter-spacing:-.03em;
+  margin:0 0 12px;
+}
+
+h3{
+  font-size:20px;
+  line-height:1.15;
+}
+
+.lead{
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.5;
+  max-width:56ch;
+}
+
+.small{
+  color:var(--muted);
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:22px;
+}
+
+.chip{
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line);
+  color:#dff5ff;
+  font-size:14px;
+}
+
+.grid2,.grid3,.metrics,.roles,.pillars,.flow,.bullets{
+  min-width:0;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.card,.role,.pillar,.step{
+  min-width:0;
+}
+
+.card{
+  padding:18px;
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+  border:1px solid var(--line);
+}
+
+.card .k{
+  margin:0 0 7px;
+  font-size:11px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:700;
+}
+
+.card .v{
+  margin:0 0 6px;
+  font-size:21px;
+  line-height:1.15;
+  font-weight:800;
+}
+
+.card p,.role p,.pillar span,.step span,.bullet p{
+  color:var(--muted);
+  line-height:1.48;
+  font-size:15px;
+}
+
+.content{
+  gap:18px;
+}
+
+.bullets{
+  display:grid;
+  gap:14px;
+}
+
+.bullet{
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+}
+
+.dot{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  color:#fff;
+  background:linear-gradient(135deg, var(--brand1), var(--brand2));
+}
+
+.bullet h3{
+  margin:0 0 4px;
+}
+
+.big-diagram{
+  width:100%;
+  min-width:0;
+  border-radius:20px;
+  padding:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid var(--line);
+  display:grid;
+  gap:16px;
+}
+
+.flow{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;
+}
+
+.step{
+  position:relative;
+  padding:14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line);
+}
+
+.step::after{
+  content:"→";
+  position:absolute;
+  right:-10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:rgba(255,255,255,.32);
+  font-size:22px;
+}
+
+.step:last-child::after{display:none}
+
+.step strong{
+  display:block;
+  margin-bottom:6px;
+  font-size:16px;
+}
+
+.pillars{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-top:8px;
+}
+
+.pillar,.role{
+  padding:18px;
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+  border:1px solid var(--line);
+}
+
+.pillar b{
+  display:block;
+  margin-bottom:8px;
+  font-size:19px;
+}
+
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.bar{
+  margin-top:8px;
+  height:10px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+}
+
+.bar i{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg, var(--brand1), var(--brand2));
+}
+
+.roles{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.role h3{
+  margin:0 0 8px;
+}
+
+.footer{
+  position:fixed;
+  left:20px;
+  right:20px;
+  bottom:16px;
+  z-index:25;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.progress{
+  flex:1 1 auto;
+  height:8px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.progress i{
+  display:block;
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg, var(--brand1), var(--brand2), var(--brand5));
+  transition:width .28s ease;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+button{
+  appearance:none;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+button:hover{
+  background:rgba(255,255,255,.12);
+}
+
+.counter{
+  min-width:64px;
+  text-align:center;
+  color:var(--muted);
+  font-weight:700;
+}
+
+@media (max-width: 980px){
+  html,body{overflow:auto}
+  .slide{
+    padding:72px 20px 92px;
+    grid-template-columns:minmax(0,1fr);
+    overflow:auto;
+  }
+  .cover,.grid2,.grid3,.metrics,.roles,.pillars,.flow{
+    grid-template-columns:minmax(0,1fr);
+  }
+  .step::after{display:none}
+  .footer{left:12px;right:12px}
+}
+</style>
+</head>
+<body>
+  <div class="brand"><span class="brand-mark"></span><span class="brand-word">CircleDot</span><span>· Agile Deck</span></div>
+
+  <div class="deck">
+    <div class="slides">
+      <section class="slide active center" data-title="Portada">
+        <div class="cover">
+          <div class="hero panel">
+            <div class="eyebrow">Presentación ejecutiva</div>
+            <h1>Agilidad y Scrum sin humo</h1>
+            <p class="lead">Una forma más clara de ordenar el trabajo, mostrar avance real y reducir fricción... incluso en áreas comerciales, operativas o de laboratorio donde no se desarrolla software.</p>
+            <div class="chips">
+              <span class="chip">Visibilidad</span>
+              <span class="chip">Priorización</span>
+              <span class="chip">Cadencia</span>
+              <span class="chip">Entrega incremental</span>
+            </div>
+          </div>
+          <div class="cover-right">
+            <div class="signal panel">
+              <svg viewBox="0 0 600 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 168C104 168 104 56 184 56C264 56 264 160 344 160C424 160 424 94 504 94C540 94 560 110 576 124" stroke="url(#g1)" stroke-width="14" stroke-linecap="round"/>
+                <path d="M44 186C126 186 134 104 212 104C286 104 294 146 356 146C426 146 454 56 566 56" stroke="url(#g2)" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+                <circle cx="184" cy="56" r="16" fill="#33E0FF"/>
+                <circle cx="344" cy="160" r="16" fill="#2B6FFF"/>
+                <circle cx="504" cy="94" r="16" fill="#FFB84D"/>
+                <defs>
+                  <linearGradient id="g1" x1="24" y1="168" x2="576" y2="124" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#33E0FF"/>
+                    <stop offset="0.5" stop-color="#2B6FFF"/>
+                    <stop offset="1" stop-color="#FF6B8F"/>
+                  </linearGradient>
+                  <linearGradient id="g2" x1="44" y1="186" x2="566" y2="56" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#59F1C8"/>
+                    <stop offset="1" stop-color="#33E0FF"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="grid2">
+              <div class="card">
+                <div class="k">Objetivo</div>
+                <div class="v">Ordenar el trabajo</div>
+                <p>No decorar reuniones. Hacer visible qué entra, qué sale y qué bloquea.</p>
+              </div>
+              <div class="card">
+                <div class="k">Resultado</div>
+                <div class="v">Más foco</div>
+                <p>Menos multitarea caprichosa... más avance verificable.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Problema actual">
+        <div class="content panel">
+          <div class="eyebrow">Punto de partida</div>
+          <h2>El problema no suele ser falta de trabajo... suele ser falta de sistema</h2>
+          <div class="bullets">
+            <div class="bullet"><div class="dot">1</div><div><h3>Todo parece urgente</h3><p>Sin una cola visible de prioridades, el trabajo cambia de dirección por presión del momento o por jerarquía informal.</p></div></div>
+            <div class="bullet"><div class="dot">2</div><div><h3>Nadie ve el estado real</h3><p>Hay actividad... pero no necesariamente progreso. Mucho movimiento, poca trazabilidad.</p></div></div>
+            <div class="bullet"><div class="dot">3</div><div><h3>Se interrumpe a los especialistas</h3><p>Cuando una persona entra y sale de foco a demanda, la práctica se degrada y la velocidad real cae.</p></div></div>
+          </div>
+        </div>
+        <div class="visual panel">
+          <div class="big-diagram">
+            <div class="small">Patrón típico de desorden</div>
+            <div class="flow">
+              <div class="step"><strong>Pedido</strong><span>Llega por mail, chat o pasillo.</span></div>
+              <div class="step"><strong>Salto de prioridad</strong><span>Se pisa lo que estaba en curso.</span></div>
+              <div class="step"><strong>Trabajo parcial</strong><span>Se empieza mucho... se termina poco.</span></div>
+              <div class="step"><strong>Bloqueos ocultos</strong><span>Nadie los ve hasta que explotan.</span></div>
+              <div class="step"><strong>Reporte tardío</strong><span>La dirección se entera tarde.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Práctica ágil útil para todos">
+        <div class="hero panel">
+          <div class="eyebrow">Antes de Scrum puro</div>
+          <h2>Una práctica ágil simple que sirve en cualquier área</h2>
+          <p class="lead">Tomar el trabajo comprometido para un período corto, limitar cambios durante ese período y revisar resultados con evidencia. Eso ya mejora muchísimo la operación, aunque el equipo no haga software.</p>
+          <div class="pillars">
+            <div class="pillar"><b>Cadencia</b><span>Una semana o dos. Siempre igual. Eso crea ritmo y comparabilidad.</span></div>
+            <div class="pillar"><b>Tablero visible</b><span>Qué está pendiente, qué está en curso, qué está bloqueado, qué terminó.</span></div>
+            <div class="pillar"><b>Revisión corta</b><span>Al final del período se muestra resultado, no relato.</span></div>
+          </div>
+        </div>
+        <div class="visual panel">
+          <div class="big-diagram">
+            <div class="small">Modelo operativo mínimo</div>
+            <div class="grid2">
+              <div class="card"><div class="k">Entrada</div><div class="v">Lista priorizada</div><p>La dirección ordena qué importa más. No todo entra al mismo tiempo.</p></div>
+              <div class="card"><div class="k">Compromiso</div><div class="v">Bloque de trabajo estable</div><p>Durante el período se protege el foco. Los cambios son excepción, no costumbre.</p></div>
+              <div class="card"><div class="k">Seguimiento</div><div class="v">Estado a la vista</div><p>Lo trabado se ve temprano. Eso permite intervenir antes.</p></div>
+              <div class="card"><div class="k">Cierre</div><div class="v">Resultado demostrable</div><p>Se muestra lo terminado y se decide el siguiente bloque.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Visión CEO">
+        <div class="content panel">
+          <div class="eyebrow">Visión ejecutiva</div>
+          <h2>Qué gana el CEO con esta práctica</h2>
+          <div class="bullets">
+            <div class="bullet"><div class="dot">A</div><div><h3>Un mapa simple del avance</h3><p>En lugar de pedir estado por personas o por intuición, mira un tablero y una revisión de resultados.</p></div></div>
+            <div class="bullet"><div class="dot">B</div><div><h3>Mejor conversación de prioridades</h3><p>La discusión deja de ser quién gritó más fuerte... pasa a ser qué produce más valor ahora.</p></div></div>
+            <div class="bullet"><div class="dot">C</div><div><h3>Detección temprana de cuellos de botella</h3><p>Los bloqueos se vuelven visibles antes de contaminar toda la operación.</p></div></div>
+          </div>
+        </div>
+        <div class="visual panel">
+          <div class="big-diagram">
+            <div class="metrics">
+              <div class="card"><div class="k">Trabajo comprometido</div><div class="v">12 iniciativas</div><p>Definidas al inicio del período.</p><div class="bar"><i style="width:78%"></i></div></div>
+              <div class="card"><div class="k">Trabajo terminado</div><div class="v">9 completas</div><p>No estimaciones vagas. Hechos.</p><div class="bar"><i style="width:72%"></i></div></div>
+              <div class="card"><div class="k">Bloqueadas</div><div class="v">2 visibles</div><p>Con responsable y causa nombrada.</p><div class="bar"><i style="width:26%"></i></div></div>
+              <div class="card"><div class="k">Interrupciones</div><div class="v">1 excepción</div><p>Se mide para no normalizar el caos.</p><div class="bar"><i style="width:18%"></i></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Tablero">
+        <div class="hero panel">
+          <div class="eyebrow">Instrumento central</div>
+          <h2>Un tablero bien hecho ya cambia el comportamiento</h2>
+          <p class="lead">No es una pared con post-its lindos. Es un mecanismo de decisión. Si algo está fuera del tablero, no existe. Si está bloqueado, debe verse. Si terminó, debe poder comprobarse.</p>
+          <div class="chips">
+            <span class="chip">Pendiente</span>
+            <span class="chip">En curso</span>
+            <span class="chip">Bloqueado</span>
+            <span class="chip">Hecho</span>
+          </div>
+        </div>
+        <div class="visual panel">
+          <div class="big-diagram">
+            <div class="grid3">
+              <div class="card"><div class="k">Pendiente</div><div class="v">Prioridad clara</div><p>Ordenada por impacto. No por antigüedad.</p></div>
+              <div class="card"><div class="k">En curso</div><div class="v">Límite de trabajo</div><p>Pocas cosas a la vez... para terminar de verdad.</p></div>
+              <div class="card"><div class="k">Bloqueado</div><div class="v">Impedimento visible</div><p>Sin esconder el problema bajo la alfombra.</p></div>
+            </div>
+            <div class="card"><div class="k">Hecho</div><div class="v">Criterio explícito de terminado</div><p>Hecho no significa “casi”. Hecho significa usable, verificable y aceptado.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Cadencia">
+        <div class="content panel">
+          <div class="eyebrow">Ritmo de trabajo</div>
+          <h2>La cadencia reduce ansiedad y mejora la coordinación</h2>
+          <div class="bullets">
+            <div class="bullet"><div class="dot">1</div><div><h3>Planificación corta</h3><p>Se toma una porción realista de trabajo para el próximo período.</p></div></div>
+            <div class="bullet"><div class="dot">2</div><div><h3>Seguimiento breve</h3><p>Reuniones cortas, centradas en avance, próximos pasos y bloqueos.</p></div></div>
+            <div class="bullet"><div class="dot">3</div><div><h3>Revisión con evidencia</h3><p>Se muestran resultados terminados... no promesas recicladas.</p></div></div>
+            <div class="bullet"><div class="dot">4</div><div><h3>Ajuste del proceso</h3><p>El equipo corrige su forma de trabajar, no solo su lista de tareas.</p></div></div>
+          </div>
+        </div>
+        <div class="visual panel">
+          <div class="big-diagram">
+            <div class="small">Ciclo sugerido</div>
+            <div class="flow">
+              <div class="step"><strong>Lunes</strong><span>Definir el bloque a ejecutar.</span></div>
+              <div class="step"><strong>Diario</strong><span>Chequear foco y bloqueos.</span></div>
+              <div class="step"><strong>Mitad</strong><span>Corregir desvíos temprano.</span></div>
+              <div class="step"><strong>Viernes</strong><span>Mostrar resultado logrado.</span></div>
+              <div class="step"><strong>Cierre</strong><span>Ajustar la forma de trabajar.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Scrum puro">
+        <div class="hero panel">
+          <div class="eyebrow">Ahora sí</div>
+          <h2>¿Qué es Scrum en sentido estricto?</h2>
+          <p class="lead">Un marco de trabajo liviano para resolver problemas complejos mediante inspección y adaptación. No reemplaza la gerencia... pero descentraliza la gestión diaria del trabajo dentro de un equipo estable.</p>
+          <div class="pillars">
+            <div class="pillar"><b>Empírico</b><span>Se trabaja con evidencia, no con fantasía de control total.</span></div>
+            <div class="pillar"><b>Iterativo</b><span>Se avanza en ciclos cortos y se aprende sobre la marcha.</span></div>
+            <div class="pillar"><b>Enfocado en valor</b><span>No se trata de “hacer más”. Se trata de hacer lo que más sirve.</span></div>
+          </div>
+        </div>
+        <div class="visual panel">
+          <div class="big-diagram">
+            <div class="small">Los tres pilares de Scrum</div>
+            <div class="pillars">
+              <div class="pillar"><b>Transparencia</b><span>El estado del trabajo debe ser visible y entendible.</span></div>
+              <div class="pillar"><b>Inspección</b><span>Se revisa frecuentemente el producto y el proceso.</span></div>
+              <div class="pillar"><b>Adaptación</b><span>Cuando algo no sirve, se corrige rápido.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Roles y artefactos">
+        <div class="content panel">
+          <div class="eyebrow">Componentes de Scrum</div>
+          <h2>Roles, eventos y artefactos</h2>
+          <div class="roles">
+            <div class="role"><h3>Product Owner</h3><p>Maximiza valor. Decide prioridad, alcance y trade offs reales.</p></div>
+            <div class="role"><h3>Scrum Master</h3><p>Cuida el marco, remueve impedimentos y acompaña la madurez del equipo.</p></div>
+            <div class="role"><h3>Developers</h3><p>Convierten trabajo priorizado en incrementos terminados y verificables.</p></div>
+          </div>
+          <div class="chips">
+            <span class="chip">Product Backlog</span>
+            <span class="chip">Sprint Backlog</span>
+            <span class="chip">Increment</span>
+            <span class="chip">Sprint Planning</span>
+            <span class="chip">Daily Scrum</span>
+            <span class="chip">Review</span>
+            <span class="chip">Retrospective</span>
+          </div>
+        </div>
+        <div class="visual panel">
+          <div class="big-diagram">
+            <div class="small">Lectura simple</div>
+            <div class="flow">
+              <div class="step"><strong>Backlog</strong><span>Opciones ordenadas por valor.</span></div>
+              <div class="step"><strong>Planning</strong><span>Elegir qué hacer ahora.</span></div>
+              <div class="step"><strong>Sprint</strong><span>Ejecutar y ajustar a diario.</span></div>
+              <div class="step"><strong>Review</strong><span>Mostrar resultado.</span></div>
+              <div class="step"><strong>Retro</strong><span>Mejorar el sistema.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Cierre">
+        <div class="hero panel">
+          <div class="eyebrow">Idea final</div>
+          <h2>Agilidad no es desorden con nombre lindo</h2>
+          <p class="lead">Bien aplicada, da más disciplina, más foco y mejor información para decidir. Primero se puede adoptar una práctica ágil útil para toda la organización... y después, donde haga sentido, profundizar en Scrum puro.</p>
+          <div class="chips">
+            <span class="chip">Menos caos</span>
+            <span class="chip">Más evidencia</span>
+            <span class="chip">Más foco</span>
+            <span class="chip">Mejora continua</span>
+          </div>
+        </div>
+        <div class="visual panel">
+          <div class="big-diagram">
+            <div class="grid2">
+              <div class="card"><div class="k">Próximo paso</div><div class="v">Definir un piloto</div><p>Elegir un equipo o flujo acotado para probar la práctica con tablero, cadencia y revisión.</p></div>
+              <div class="card"><div class="k">Criterio de éxito</div><div class="v">Más claridad</div><p>Menos trabajo invisible, menos interrupciones y más terminado verificable al cierre del período.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="progress"><i id="progress"></i></div>
+    <div class="nav">
+      <button id="prev">← Anterior</button>
+      <div class="counter" id="counter">1 / 8</div>
+      <button id="next">Siguiente →</button>
+    </div>
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const counter = document.getElementById('counter');
+    const progress = document.getElementById('progress');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    let index = 0;
+
+    function render() {
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+      counter.textContent = `${index + 1} / ${slides.length}`;
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+      document.title = `${slides[index].dataset.title} · Agile Scrum Slides`;
+    }
+
+    function go(dir) {
+      index = (index + dir + slides.length) % slides.length;
+      render();
+    }
+
+    prev.addEventListener('click', () => go(-1));
+    next.addEventListener('click', () => go(1));
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') go(1);
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(-1);
+    });
+    render();
+  </script>
+</body>
+</html>
